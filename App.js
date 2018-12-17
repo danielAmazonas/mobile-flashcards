@@ -42,9 +42,7 @@ export default class App extends React.Component {
 
   componentDidMount = () => {
     this.loadTodos()
-    if (this.state.completed === false) {
-      setLocalNotification()  
-    }
+    setLocalNotification()
   }
 
   loadTodos = async () => {
@@ -137,12 +135,6 @@ export default class App extends React.Component {
     const saveTodos = AsyncStorage.setItem('todos', JSON.stringify(newTodos))
   }
 
-  completed = value => {
-    this.setState({
-      completed: value,
-    })
-  }
-
   render() {
     const { newTodoDeck, dataIsReady, todos } = this.state
     // AsyncStorage.clear()
@@ -181,7 +173,6 @@ export default class App extends React.Component {
                 length={todo.questions.length}
                 addQuestion={this.addQuestion}
                 detailDeck={this.detailDeck}
-                completed={this.completed}
               />
             )}
           </ScrollView>

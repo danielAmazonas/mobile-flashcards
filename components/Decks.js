@@ -37,6 +37,7 @@ import {
 import { LinearGradient } from 'expo'
 import PropTypes from 'prop-types'
 import { EvilIcons } from '@expo/vector-icons'
+import { clearLocalNotification } from '../utils/helpers'
 
 const { height, width } = Dimensions.get('window')
 let i = 0
@@ -115,13 +116,12 @@ class Decks extends Component {
     length: PropTypes.number.isRequired,
     addQuestion: PropTypes.func.isRequired,
     detailDeck: PropTypes.func.isRequired,
-    completed: PropTypes.func.isRequired,
   }
 
   nextCard = () => {
     if (i === this.props.length - 1) {
       this.setModalPointsVisible(true)
-      this.props.completed(true)
+      clearLocalNotification()
     } else {
       i = i + 1
       let deck = this.props.detailDeck(this.props.title)
