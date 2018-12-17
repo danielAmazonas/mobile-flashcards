@@ -32,17 +32,17 @@ Para iniciar o servidor React e executar o aplicativo:
 
 É assim que o aplicativo deve ser, depois de aberto no emulador ou dispositivo.
 
-![home](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/home.png =533x300)
+<img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/home.png" width="300" height="533">
 
-![add-deck](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/addDeck.png =533x300)
+<img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/addDeck.png" width="300" height="533">
 
-![collection](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/collection.png =533x300)
+<img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/collection.png" width="300" height="533">
 
-![add-question](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/question.png =533x300)
+<img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/question.png" width="300" height="533">
 
-![play](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/play.png =533x300)
+<img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/play.png" width="300" height="533">
 
-![points](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/points.png =533x300)
+<img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/points.png" width="300" height="533">
 
 ### Recursos e Documentação:
 
