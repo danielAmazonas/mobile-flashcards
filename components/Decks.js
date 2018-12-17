@@ -47,11 +47,13 @@ class Decks extends Component {
     modalAddVisible: false,
     modalDetailVisible: false,
     modalPlayVisible: false,
+    modalPointsVisible: false,
     question: '',
     answer: '',
     opacity: 0,
     questionPlay: '',
     answerPlay: '',
+    points: 0,
   }
 
   questionController = textValue => {
@@ -91,11 +93,18 @@ class Decks extends Component {
     })
   }
 
+  setModalPointsVisible(visible) {
+    this.setState({
+      modalPointsVisible: visible
+    })
+  }
+
   componentDidMount() {
     this.setState({
       modalAddVisible: false,
       modalDetailVisible: false,
       modalPlayVisible: false,
+      modalPointsVisible: false,
     })
   }
 
@@ -110,7 +119,8 @@ class Decks extends Component {
 
   nextCard = () => {
     if (i === this.props.length - 1) {
-
+      this.setModalPointsVisible(true)
+      console.log('>>>', this.state.points)
     } else {
       i = i + 1
       console.log('>>>', i)
@@ -164,12 +174,25 @@ class Decks extends Component {
     this.setState({
       questionPlay: Object.values(deck)[0].question,
       answerPlay: Object.values(deck)[0].answer,
+      points: 0,
     })
     this.hide()
   }
 
+  correct = () => {
+    this.setState({
+      points: this.state.points + 1,
+    })
+  }
+
+  incorrect = () => {
+    this.setState({
+      points: this.state.points - 1,
+    })
+  }
+
   render() {
-    const { todoValue, modalAddVisible, modalDetailVisible, modalPlayVisible, question, answer, questionPlay, answerPlay } = this.state
+    const { todoValue, modalAddVisible, modalDetailVisible, modalPlayVisible, modalPointsVisible, question, answer, questionPlay, answerPlay, points } = this.state
     const { textValue, title, length, deleteTodo, addQuestion, detailDeck } = this.props
 
     return (
@@ -346,7 +369,7 @@ class Decks extends Component {
                           {'Answer: '}{answerPlay}
                         </Text>
                         <View style={styles.buttonsPlay}>
-                          <TouchableOpacity style={styles.buttonCorrect}>
+                          <TouchableOpacity style={styles.buttonCorrect} onPress={() => this.correct()}>
                             <EvilIcons
                               name='like'
                               style={styles.textButton}
@@ -355,7 +378,7 @@ class Decks extends Component {
                           <Text>
                             {'  '}
                           </Text>
-                          <TouchableOpacity style={styles.buttonIncorrect}>
+                          <TouchableOpacity style={styles.buttonIncorrect} onPress={() => this.incorrect()}>
                             <EvilIcons
                               name='close'
                               style={styles.textButton}
@@ -414,6 +437,34 @@ class Decks extends Component {
             </View>
           </LinearGradient>
         </Modal>
+
+        {/* Points */}
+        <Modal
+          animationType='slide'
+          transparent={false}
+          backdropColor='transparent'
+          visible={modalPointsVisible}
+          onRequestClose={() => { Alert.alert('Modal has been closed.') }}>
+          <LinearGradient style={styles.modalContainer} colors={[saddlebrown, cornsilk]}>
+            <View>
+              <Text style={styles.titleAddQuestion}>SCORE:</Text>
+              <View style={styles.containerPoints}>
+                <Text style={styles.points}>
+                  {points}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.buttonsModal}>
+              <TouchableOpacity style={styles.buttonCancel} onPress={() => { this.setModalPointsVisible(!this.state.modalPointsVisible) }}>
+                <EvilIcons
+                  name='close'
+                  style={styles.textButton}
+                />
+              </TouchableOpacity>
+            </View>
+          </LinearGradient>
+        </Modal>
+
       </View>
     )
   }
@@ -640,6 +691,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  points: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 50,
+    color: darkgreen,
+  },
+  containerPoints: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 })
 
 export default Decks
