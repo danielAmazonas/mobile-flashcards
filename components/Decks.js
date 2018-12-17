@@ -115,12 +115,13 @@ class Decks extends Component {
     length: PropTypes.number.isRequired,
     addQuestion: PropTypes.func.isRequired,
     detailDeck: PropTypes.func.isRequired,
+    completed: PropTypes.func.isRequired,
   }
 
   nextCard = () => {
     if (i === this.props.length - 1) {
       this.setModalPointsVisible(true)
-      console.log('>>>', this.state.points)
+      this.props.completed(true)
     } else {
       i = i + 1
       console.log('>>>', i)
@@ -192,8 +193,24 @@ class Decks extends Component {
   }
 
   render() {
-    const { todoValue, modalAddVisible, modalDetailVisible, modalPlayVisible, modalPointsVisible, question, answer, questionPlay, answerPlay, points } = this.state
-    const { textValue, title, length, deleteTodo, addQuestion, detailDeck } = this.props
+    const {
+      todoValue,
+      modalAddVisible,
+      modalDetailVisible,
+      modalPlayVisible,
+      modalPointsVisible,
+      question,
+      answer,
+      questionPlay,
+      answerPlay,
+      points } = this.state
+    const {
+      textValue,
+      title,
+      length,
+      deleteTodo,
+      addQuestion,
+      detailDeck } = this.props
 
     return (
       <View style={styles.container}>
