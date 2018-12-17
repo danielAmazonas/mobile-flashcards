@@ -124,7 +124,6 @@ class Decks extends Component {
       this.props.completed(true)
     } else {
       i = i + 1
-      console.log('>>>', i)
       let deck = this.props.detailDeck(this.props.title)
       if (!Object.values(deck)[i]) {
 
@@ -143,7 +142,6 @@ class Decks extends Component {
 
     } else {
       i = i - 1
-      console.log('>>>', i)
       let deck = this.props.detailDeck(this.props.title)
       if (!Object.values(deck)[i]) {
 
