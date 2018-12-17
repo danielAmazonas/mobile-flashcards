@@ -1,4 +1,4 @@
-# Projeto Readable
+# Projeto Mobile-Flashcards
 
 Projeto do Módulo React-Native da Udacity. Nele, o usuário poderá criar baralhos e inserir cartas para estudos.
 
