@@ -32,8 +32,17 @@ Para iniciar o servidor React e executar o aplicativo:
 
 É assim que o aplicativo deve ser, depois de aberto no emulador ou dispositivo.
 
-![home]
+![home](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/home.png)
 
+![add-deck](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/addDeck.png)
+
+![collection](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/collection.png)
+
+![add-question](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/question.png)
+
+![play](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/play.png)
+
+![points](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/points.png)
 
 ### Recursos e Documentação:
 
