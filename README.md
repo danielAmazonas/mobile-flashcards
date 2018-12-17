@@ -32,17 +32,17 @@ Para iniciar o servidor React e executar o aplicativo:
 
 É assim que o aplicativo deve ser, depois de aberto no emulador ou dispositivo.
 
-![home](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/home.png)
+![home](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/home.png){: height="533px" width="300px"}
 
-![add-deck](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/addDeck.png)
+![add-deck](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/addDeck.png){: height="533px" width="300px"}
 
-![collection](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/collection.png)
+![collection](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/collection.png){: height="533px" width="300px"}
 
-![add-question](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/question.png)
+![add-question](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/question.png){: height="533px" width="300px"}
 
-![play](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/play.png)
+![play](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/play.png){: height="533px" width="300px"}
 
-![points](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/points.png)
+![points](https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/points.png){: height="533px" width="300px"}
 
 ### Recursos e Documentação:
 
