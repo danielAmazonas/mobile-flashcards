@@ -44,6 +44,10 @@ Para iniciar o servidor React e executar o aplicativo:
 
 <img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/points.png" width="300" height="533">
 
+### Testado em:
+- Emulador - Android 9
+- Dispositivo - Android 6.0.1
+
 ### Recursos e Documentação:
 
 - [Create-react-native-app Documentation](https://github.com/react-community/create-react-native-app)
