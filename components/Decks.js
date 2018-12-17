@@ -455,6 +455,15 @@ class Decks extends Component {
               </View>
             </View>
             <View style={styles.buttonsModal}>
+              <TouchableOpacity style={styles.buttonRefresh} onPress={() => { this.resetPosition(), this.setModalPointsVisible(!this.state.modalPointsVisible) }}>
+                <EvilIcons
+                  name='refresh'
+                  style={styles.textButton}
+                />
+              </TouchableOpacity>
+              <Text>
+                {'   '}
+              </Text>
               <TouchableOpacity style={styles.buttonCancel} onPress={() => { this.setModalPointsVisible(!this.state.modalPointsVisible) }}>
                 <EvilIcons
                   name='close'
