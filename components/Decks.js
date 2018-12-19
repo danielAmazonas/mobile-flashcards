@@ -3,8 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
-  ScrollView,
   Platform,
   TouchableOpacity,
   Dimensions,
@@ -34,13 +32,15 @@ import {
   indigo,
   purple,
 } from '../utils/colors'
-import { LinearGradient } from 'expo'
 import PropTypes from 'prop-types'
 import { EvilIcons } from '@expo/vector-icons'
 import { clearLocalNotification } from '../utils/helpers'
+import AddCard from './AddCard'
+import DetailDeck from './DetailDeck'
+import Play from './Play'
+import Score from './Score'
 
 const { height, width } = Dimensions.get('window')
-let i = 0
 
 class Decks extends Component {
   state = {
@@ -57,6 +57,7 @@ class Decks extends Component {
     correct: false,
     incorrect: false,
     points: 0,
+    increment: 0,
   }
 
   questionController = textValue => {
@@ -78,25 +79,25 @@ class Decks extends Component {
     })
   }
 
-  setModalAddVisible(visible) {
+  setModalAddVisible = visible => {
     this.setState({
       modalAddVisible: visible
     })
   }
 
-  setModalDetailVisible(visible) {
+  setModalDetailVisible = visible => {
     this.setState({
       modalDetailVisible: visible
     })
   }
 
-  setModalPlayVisible(visible) {
+  setModalPlayVisible = visible => {
     this.setState({
       modalPlayVisible: visible
     })
   }
 
-  setModalPointsVisible(visible) {
+  setModalPointsVisible = visible => {
     this.setState({
       modalPointsVisible: visible
     })
@@ -121,18 +122,22 @@ class Decks extends Component {
   }
 
   nextCard = () => {
-    if (i === this.props.length - 1) {
+    if (this.state.increment === this.props.length - 1) {
       this.setModalPointsVisible(true)
       clearLocalNotification()
     } else {
-      i = i + 1
+      this.setState({
+        increment: this.state.increment + 1,
+        correct: false,
+        incorrect: false,
+      })
       let deck = this.props.detailDeck(this.props.title)
-      if (!Object.values(deck)[i]) {
+      if (!Object.values(deck)[this.state.increment]) {
 
       } else {
         this.setState({
-          questionPlay: Object.values(deck)[i].question,
-          answerPlay: Object.values(deck)[i].answer,
+          questionPlay: Object.values(deck)[this.state.increment].question,
+          answerPlay: Object.values(deck)[this.state.increment].answer,
         })
       }
     }
@@ -140,17 +145,21 @@ class Decks extends Component {
   }
 
   prevCard = () => {
-    if (i === 0) {
+    if (this.state.increment === 0) {
 
     } else {
-      i = i - 1
+      this.setState({
+        increment: this.state.increment - 1,
+        correct: false,
+        incorrect: false,
+      })
       let deck = this.props.detailDeck(this.props.title)
-      if (!Object.values(deck)[i]) {
+      if (!Object.values(deck)[this.state.increment]) {
 
       } else {
         this.setState({
-          questionPlay: Object.values(deck)[i].question,
-          answerPlay: Object.values(deck)[i].answer,
+          questionPlay: Object.values(deck)[this.state.increment].question,
+          answerPlay: Object.values(deck)[this.state.increment].answer,
         })
       }
     }
@@ -170,7 +179,9 @@ class Decks extends Component {
   }
 
   resetPosition = () => {
-    i = 0
+    this.setState({
+      increment: 0,
+    })
     let deck = this.props.detailDeck(this.props.title)
     this.setState({
       questionPlay: Object.values(deck)[0].question,
@@ -184,6 +195,7 @@ class Decks extends Component {
 
   correct = () => {
     if (this.state.correct === false) {
+      console.log('>>>', this.state.points)
       this.setState({
         points: this.state.points + 1,
         correct: true,
@@ -208,7 +220,6 @@ class Decks extends Component {
 
   render() {
     const {
-      todoValue,
       modalAddVisible,
       modalDetailVisible,
       modalPlayVisible,
@@ -217,14 +228,18 @@ class Decks extends Component {
       answer,
       questionPlay,
       answerPlay,
-      points } = this.state
+      opacity,
+      points,
+      increment,
+    } = this.state
     const {
       textValue,
       title,
       length,
       deleteTodo,
       addQuestion,
-      detailDeck } = this.props
+      detailDeck,
+    } = this.props
 
     return (
       <View style={styles.container}>
@@ -269,7 +284,6 @@ class Decks extends Component {
                 style={styles.textButton}
               />
             </TouchableOpacity>}
-
           <Text>
             {'  '}
           </Text>
@@ -288,44 +302,17 @@ class Decks extends Component {
           backdropColor='transparent'
           visible={modalAddVisible}
           onRequestClose={() => { Alert.alert('Modal has been closed.') }}>
-          <LinearGradient style={styles.modalContainer} colors={[saddlebrown, cornsilk]}>
-            <View>
-              <Text style={styles.titleAddQuestion}>Add Question for {title}:</Text>
-              <TextInput
-                style={styles.inputQuestion}
-                placeholder='Add an question here!'
-                value={question}
-                onChangeText={this.questionController}
-                placeholderTextColor={tan}
-                autoCorrect={false}
-              />
-              <TextInput
-                style={styles.inputAwnser}
-                placeholder='Add an answer here!'
-                value={answer}
-                onChangeText={this.answerController}
-                placeholderTextColor={tan}
-                autoCorrect={false}
-              />
-              <View style={styles.buttonsModal}>
-                <TouchableOpacity style={styles.buttonAdd} onPressOut={() => { addQuestion(title, question, answer), this.clear(), this.setModalAddVisible(!this.state.modalAddVisible) }}>
-                  <EvilIcons
-                    name='plus'
-                    style={styles.textButton}
-                  />
-                </TouchableOpacity>
-                <Text>
-                  {'  '}
-                </Text>
-                <TouchableOpacity style={styles.buttonCancel} onPress={() => { this.setModalAddVisible(!this.state.modalAddVisible) }}>
-                  <EvilIcons
-                    name='close'
-                    style={styles.textButton}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </LinearGradient>
+          <AddCard
+            title={title}
+            question={question}
+            answer={answer}
+            questionController={this.questionController}
+            answerController={this.answerController}
+            addQuestion={addQuestion}
+            clear={this.clear}
+            setModalAddVisible={this.setModalAddVisible}
+            modalAddVisible={this.state.modalAddVisible}
+          />
         </Modal>
 
         {/* Detail Deck */}
@@ -335,40 +322,12 @@ class Decks extends Component {
           backdropColor='transparent'
           visible={modalDetailVisible}
           onRequestClose={() => { Alert.alert('Modal has been closed.') }}>
-          <LinearGradient style={styles.modalContainer} colors={[saddlebrown, cornsilk]}>
-            <View>
-              <Text style={styles.titleDetailDeck}>Cards for {title}:</Text>
-              <View style={styles.deck}>
-                <ScrollView contentContainerStyle={styles.listContainer}>
-                  {!Object.values(detailDeck(title)) ?
-                    <View key={`${title} - undefined`} style={styles.containerCards}>
-                      <View style={styles.rowContainerCards}>
-                        <Text style={styles.text}>
-                          {'No Cards'}
-                        </Text>
-                      </View>
-                    </View> :
-                    Object.values(detailDeck(title)).map(deck =>
-                      <View key={`${title} - ${deck.question}`} style={styles.containerCards}>
-                        <View style={styles.rowContainerCards}>
-                          <Text style={styles.text}>
-                            {deck.question}
-                          </Text>
-                        </View>
-                      </View>
-                    )}
-                </ScrollView>
-              </View>
-              <View style={styles.buttonsModal}>
-                <TouchableOpacity style={styles.buttonCancel} onPress={() => { this.setModalDetailVisible(!this.state.modalDetailVisible) }}>
-                  <EvilIcons
-                    name='close'
-                    style={styles.textButton}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </LinearGradient>
+          <DetailDeck
+            title={title}
+            detailDeck={detailDeck}
+            setModalDetailVisible={this.setModalDetailVisible}
+            modalDetailVisible={this.state.modalDetailVisible}
+          />
         </Modal>
 
         {/* Play */}
@@ -378,140 +337,40 @@ class Decks extends Component {
           backdropColor='transparent'
           visible={modalPlayVisible}
           onRequestClose={() => { Alert.alert('Modal has been closed.') }}>
-          <LinearGradient style={styles.modalContainer} colors={[saddlebrown, cornsilk]}>
-            <View>
-              <Text style={styles.titleAddQuestion}>Play - {title}: {i + 1}/{length}</Text>
-              <View style={styles.deck}>
-                <ScrollView contentContainerStyle={styles.listContainer}>
-                  {!Object.values(detailDeck(title)) ?
-                    <View key={`${title} - undefined`}>
-                      <View style={styles.rowContainerPlay}>
-                        <Text style={styles.text}>
-                          {'No Cards'}
-                        </Text>
-                      </View>
-                    </View> :
-                    <View key={`${title} - ${Object.values(detailDeck(title))}`}>
-                      <View style={styles.deckPlay}>
-                        <Text style={styles.text}>
-                          {'Question: '}{questionPlay}
-                        </Text>
-                        <Text style={[styles.text, { opacity: this.state.opacity }]}>
-                          {'Answer: '}{answerPlay}
-                        </Text>
-                        <View style={styles.buttonsPlay}>
-                          <TouchableOpacity style={styles.buttonCorrect} onPress={() => this.correct()}>
-                            <EvilIcons
-                              name='like'
-                              style={styles.textButton}
-                            />
-                          </TouchableOpacity>
-                          <Text>
-                            {'  '}
-                          </Text>
-                          <TouchableOpacity style={styles.buttonIncorrect} onPress={() => this.incorrect()}>
-                            <EvilIcons
-                              name='close'
-                              style={styles.textButton}
-                            />
-                          </TouchableOpacity>
-                          <Text>
-                            {'  '}
-                          </Text>
-                          <TouchableOpacity style={styles.buttonView} onPress={() => this.show()}>
-                            <EvilIcons
-                              name='eye'
-                              style={styles.textButton}
-                            />
-                          </TouchableOpacity>
-                          <Text>
-                            {'  '}
-                          </Text>
-                          <TouchableOpacity style={styles.buttonPrev} onPress={() => this.prevCard()}>
-                            <EvilIcons
-                              name='arrow-left'
-                              style={styles.textButton}
-                            />
-                          </TouchableOpacity>
-                          <Text>
-                            {'  '}
-                          </Text>
-                          <TouchableOpacity style={styles.buttonNext} onPress={() => this.nextCard()}>
-                            <EvilIcons
-                              name='arrow-right'
-                              style={styles.textButton}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    </View>
-                  }
-                </ScrollView>
-              </View>
-              <View style={styles.buttonsModal}>
-                <TouchableOpacity style={styles.buttonRefresh} onPress={() => { this.resetPosition() }}>
-                  <EvilIcons
-                    name='refresh'
-                    style={styles.textButton}
-                  />
-                </TouchableOpacity>
-                <Text>
-                  {'   '}
-                </Text>
-                <TouchableOpacity style={styles.buttonCancel} onPress={() => { this.setModalPlayVisible(!this.state.modalPlayVisible) }}>
-                  <EvilIcons
-                    name='close'
-                    style={styles.textButton}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </LinearGradient>
+          <Play
+            title={title}
+            length={length}
+            detailDeck={detailDeck}
+            questionPlay={questionPlay}
+            answerPlay={answerPlay}
+            opacity={opacity}
+            correct={this.correct}
+            incorrect={this.incorrect}
+            show={this.show}
+            prevCard={this.prevCard}
+            nextCard={this.nextCard}
+            resetPosition={this.resetPosition}
+            setModalPlayVisible={this.setModalPlayVisible}
+            modalPlayVisible={this.state.modalPlayVisible}
+            increment={increment}
+          />
         </Modal>
 
-        {/* Points */}
+        {/* Score */}
         <Modal
           animationType='slide'
           transparent={false}
           backdropColor='transparent'
           visible={modalPointsVisible}
           onRequestClose={() => { Alert.alert('Modal has been closed.') }}>
-          <LinearGradient style={styles.modalContainer} colors={[saddlebrown, cornsilk]}>
-            <View>
-              <Text style={styles.titleAddQuestion}>SCORE:</Text>
-              <View style={styles.containerPoints}>
-                <Text style={styles.points}>
-                  {points}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.buttonsModal}>
-              <TouchableOpacity style={styles.buttonRefresh} onPress={() => { this.resetPosition(), this.setModalPointsVisible(!this.state.modalPointsVisible) }}>
-                <EvilIcons
-                  name='refresh'
-                  style={styles.textButton}
-                />
-              </TouchableOpacity>
-              <Text>
-                {'   '}
-              </Text>
-              <TouchableOpacity style={styles.buttonHome} onPress={() => { this.resetPosition(), this.setModalPointsVisible(!this.state.modalPointsVisible), this.setModalPlayVisible(!this.setModalPlayVisible) }}>
-                <EvilIcons
-                  name='arrow-up'
-                  style={styles.textButton}
-                />
-              </TouchableOpacity>
-              <Text>
-                {'   '}
-              </Text>
-              <TouchableOpacity style={styles.buttonCancel} onPress={() => { this.setModalPointsVisible(!this.state.modalPointsVisible) }}>
-                <EvilIcons
-                  name='close'
-                  style={styles.textButton}
-                />
-              </TouchableOpacity>
-            </View>
-          </LinearGradient>
+          <Score
+            points={points}
+            resetPosition={this.resetPosition}
+            setModalPointsVisible={this.setModalPointsVisible}
+            setModalPlayVisible={this.setModalPlayVisible}
+            modalPointsVisible={this.state.modalPointsVisible}
+            modalPlayVisible={this.state.modalPlayVisible}
+          />
         </Modal>
 
       </View>
