@@ -44,6 +44,14 @@ Para iniciar o servidor React e executar o aplicativo:
 
 <img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/points.png" width="300" height="533">
 
+### Botões:
+
+<img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/collection-names.png" width="300" height="533">
+
+<img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/play-names.png" width="300" height="533">
+
+<img src="https://github.com/danielAmazonas/mobile-flashcards/blob/master/screenshots/points-names.png" width="300" height="533">
+
 ### Testado em:
 - Emulador - Android 9
 - Dispositivo - Android 6.0.1
