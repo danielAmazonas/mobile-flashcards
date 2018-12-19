@@ -54,6 +54,8 @@ class Decks extends Component {
     opacity: 0,
     questionPlay: '',
     answerPlay: '',
+    correct: false,
+    incorrect: false,
     points: 0,
   }
 
@@ -174,20 +176,34 @@ class Decks extends Component {
       questionPlay: Object.values(deck)[0].question,
       answerPlay: Object.values(deck)[0].answer,
       points: 0,
+      correct: false,
+      incorrect: false,
     })
     this.hide()
   }
 
   correct = () => {
-    this.setState({
-      points: this.state.points + 1,
-    })
+    if (this.state.correct === false) {
+      this.setState({
+        points: this.state.points + 1,
+        correct: true,
+        incorrect: false,
+      })
+    }
   }
 
   incorrect = () => {
-    this.setState({
-      points: this.state.points - 1,
-    })
+    if (this.state.incorrect == false) {
+      if (this.state.points === 0) {
+
+      } else {
+        this.setState({
+          points: this.state.points - 1,
+          correct: false,
+          incorrect: true,
+        })
+      }
+    }
   }
 
   render() {
@@ -479,6 +495,15 @@ class Decks extends Component {
               <Text>
                 {'   '}
               </Text>
+              <TouchableOpacity style={styles.buttonHome} onPress={() => { this.resetPosition(), this.setModalPointsVisible(!this.state.modalPointsVisible), this.setModalPlayVisible(!this.setModalPlayVisible) }}>
+                <EvilIcons
+                  name='arrow-up'
+                  style={styles.textButton}
+                />
+              </TouchableOpacity>
+              <Text>
+                {'   '}
+              </Text>
               <TouchableOpacity style={styles.buttonCancel} onPress={() => { this.setModalPointsVisible(!this.state.modalPointsVisible) }}>
                 <EvilIcons
                   name='close'
@@ -570,6 +595,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: indigo,
     borderColor: purple,
+  },
+  buttonHome: {
+    borderRadius: 5,
+    borderWidth: 1,
+    backgroundColor: purple,
+    borderColor: indigo,
   },
   buttonCorrect: {
     borderRadius: 5,
